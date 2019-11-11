@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.access.ConfigAttribute;
@@ -86,6 +87,7 @@ public class SecurityFilterConfig {
     }
 
     @Bean
+    @Profile("!mocktest")
     public FilterRegistrationBean<?> openEntityManagerInViewFilter() {
         FilterRegistrationBean<?> filterBean = new FilterRegistrationBean<>(new OpenEntityManagerInViewFilter());
         filterBean.addUrlPatterns(PATH_DAV);

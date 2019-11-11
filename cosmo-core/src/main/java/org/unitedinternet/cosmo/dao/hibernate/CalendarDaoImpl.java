@@ -27,6 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.calendar.query.CalendarFilter;
@@ -57,6 +58,7 @@ import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
  *
  */
 @Repository
+@Profile("!mocktest")
 public class CalendarDaoImpl implements CalendarDao {
 
     private static final Log LOG = LogFactory.getLog(CalendarDaoImpl.class);

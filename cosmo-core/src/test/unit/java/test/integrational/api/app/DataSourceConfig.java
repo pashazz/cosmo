@@ -11,6 +11,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.util.SocketUtils;
 
 /**
@@ -20,6 +21,7 @@ import org.springframework.util.SocketUtils;
  *
  */
 @Configuration
+@Profile("!mocktest")
 @ConfigurationProperties("spring.datasource")
 public class DataSourceConfig extends HikariConfig {
 

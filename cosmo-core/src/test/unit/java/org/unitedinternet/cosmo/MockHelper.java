@@ -79,7 +79,6 @@ public class MockHelper extends TestHelper {
         serviceLocatorFactory.setDavPrefix("/dav");
         serviceLocatorFactory.setSecurityManager(securityManager);
         serviceLocatorFactory.init();
-
         MockDaoStorage storage = new MockDaoStorage();
         MockCalendarDao calendarDao = new MockCalendarDao(storage);
         MockContentDao contentDao = new MockContentDao(storage);

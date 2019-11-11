@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.CollectionSubscriptionDao;
 import org.unitedinternet.cosmo.model.CollectionSubscription;
@@ -15,6 +16,7 @@ import org.unitedinternet.cosmo.model.CollectionSubscription;
  *
  */
 @Repository
+@Profile("!mocktest")
 public class CollectionSubscriptionDaoImpl implements CollectionSubscriptionDao {
 
     @PersistenceContext

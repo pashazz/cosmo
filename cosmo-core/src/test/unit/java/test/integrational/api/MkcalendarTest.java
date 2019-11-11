@@ -20,7 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 
-public class MkcalendarTest extends AbstractIntegrationalTest {
+public class MkcalendarTest extends AbstractMockIntegrationalTest {
     
 
     protected RequestBuilder makeMkcalendar(String path) {

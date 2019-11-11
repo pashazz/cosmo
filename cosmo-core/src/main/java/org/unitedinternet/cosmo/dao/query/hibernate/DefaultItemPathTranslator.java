@@ -23,6 +23,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.apache.abdera.i18n.text.UrlEncoding;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.query.ItemPathTranslator;
 import org.unitedinternet.cosmo.model.CollectionItem;
@@ -33,6 +34,7 @@ import org.unitedinternet.cosmo.model.Item;
  * /username/parent1/parent2/itemname
  */
 @Repository
+@Profile("!mocktest")
 public class DefaultItemPathTranslator implements ItemPathTranslator {
 
     @PersistenceContext

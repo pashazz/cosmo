@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.persistence.FlushModeType;
 import javax.persistence.TypedQuery;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.ContentDao;
 import org.unitedinternet.cosmo.dao.ModelValidationException;
@@ -37,6 +38,7 @@ import org.unitedinternet.cosmo.model.hibernate.HibItemTombstone;
  * 
  */
 @Repository
+@Profile("!mocktest")
 public class ContentDaoImpl extends ItemDaoImpl implements ContentDao {
 
     public ContentDaoImpl() {

@@ -31,6 +31,7 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.query.internal.QueryImpl;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.unitedinternet.cosmo.CosmoConstants;
 import org.unitedinternet.cosmo.calendar.Instance;
@@ -66,6 +67,7 @@ import org.unitedinternet.cosmo.util.NoteOccurrenceUtil;
  * processes the results.
  */
 @Component
+@Profile("!mocktest")
 public class StandardItemFilterProcessor  implements ItemFilterProcessor {
 
     private static final Log LOG = LogFactory.getLog(StandardItemFilterProcessor.class);

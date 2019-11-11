@@ -24,8 +24,7 @@ import java.net.URISyntaxException;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = IntegrationalTestApplication.class)
 @ActiveProfiles(value = { "test" })
 public abstract class AbstractIntegrationalTest {
-    @Autowired
-    protected static volatile MariaDB4jSpringService mariaDB = new MariaDB4jSpringService();
+
 
     @LocalServerPort
     protected int port;
@@ -34,7 +33,8 @@ public abstract class AbstractIntegrationalTest {
         return RequestBuilder.create(method).setUri(getUri(path));
     }
 
-    protected static HttpClientBuilder withUser(String username, String password) {
+
+    protected HttpClientBuilder withUser(String username, String password) {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
         CredentialsProvider provider = new BasicCredentialsProvider();
         provider.setCredentials(AuthScope.ANY, credentials);

@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.ContentDao;
 import org.unitedinternet.cosmo.dao.PathSegments;
@@ -33,6 +34,7 @@ import net.fortuna.ical4j.model.component.VEvent;
  *
  */
 @Repository
+@Profile("!mocktest")
 public class ContentDaoExternal implements ContentDao {
 
     private static final Log LOG = LogFactory.getLog(ContentDaoExternal.class);

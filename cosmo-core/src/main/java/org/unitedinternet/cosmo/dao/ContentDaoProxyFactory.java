@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
 /**
  * {@link FactoryBean} for creating a <code>ItemDao</code> implementation that delegates all the method invocations to
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Primary;
  * @see ContentDaoInvocationHandler
  */ 
 @Configuration
+@Profile("!mocktest")
 public class ContentDaoProxyFactory{
 
     @Autowired

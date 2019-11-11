@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.unitedinternet.cosmo.dao.ContentDao;
@@ -24,6 +25,7 @@ import org.unitedinternet.cosmo.model.hibernate.HibCollectionSubscriptionItem;
  * @see CollectionSubscription
  */
 @Repository
+@Profile("!mocktest")
 public class ContentDaoSubscriptionImpl implements ContentDao {
 
     private final ContentDaoImpl contentDaoInternal;

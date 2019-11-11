@@ -20,6 +20,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.ServerPropertyDao;
 import org.unitedinternet.cosmo.model.ServerProperty;
@@ -29,6 +30,7 @@ import org.unitedinternet.cosmo.model.hibernate.HibServerProperty;
  *
  */
 @Repository
+@Profile("!mocktest")
 public class ServerPropertyDaoImpl implements ServerPropertyDao {
 
     @PersistenceContext

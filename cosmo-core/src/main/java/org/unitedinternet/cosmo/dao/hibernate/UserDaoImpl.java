@@ -25,6 +25,7 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 import org.unitedinternet.cosmo.dao.DuplicateEmailException;
@@ -43,6 +44,7 @@ import org.unitedinternet.cosmo.util.VersionFourGenerator;
  * 
  */
 @Repository
+@Profile("!mocktest")
 public class UserDaoImpl implements UserDao {
 
     @Autowired

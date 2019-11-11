@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * XXX - Remove this.
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
+@Profile("!mocktest")
 public class DbInitializerFactoryBean {
 
     // private HibernateSessionFactoryBeanDelegate localSessionFactory;
