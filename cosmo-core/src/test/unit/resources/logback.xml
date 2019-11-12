@@ -28,7 +28,8 @@
    <!-- RULES for logging OFF < TRACE < DEBUG < INFO < WARN < ERROR < ALL [INHERITED|NULL] -->
 
     <!-- SERVICE logger setup -->
-    <logger name="com.unitedinternet" level="INFO" />
+    <logger name="com.unitedinternet" level="DEBUG" />
+    <logger name="org.unitedinternet" level="DEBUG" />
     <logger name="net.gmx" level="INFO" />
     <logger name="de.web" level="INFO" />
     <logger name="net.sf" level="WARN" />

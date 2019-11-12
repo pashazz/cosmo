@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 public abstract class AbstractIntegrationalTest {
 
 
+
     @LocalServerPort
     protected int port;
 

@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.unitedinternet.cosmo.model.*;
+import org.unitedinternet.cosmo.model.util.ItemUtils;
 
 
 /**
@@ -565,22 +566,7 @@ public abstract class MockItem extends MockAuditableObject implements Item {
     }
 
      public Set<CollectionItem> getAllParents() {
-        Set<CollectionItem> allParents = new HashSet<>();
-        Queue<Item> queue = new LinkedList<>();
-         queue.add(this);
-         while (!queue.isEmpty()) {
-             Item current = queue.poll();
-             try {
-                 if (allParents.contains(current)) {
-                     continue;
-                 }
-             } catch (ClassCastException e)  {
-                 continue; // this may as well not be a CollectionItem and thus there will never be a loop
-             }
-             allParents.addAll(current.getParents());
-             queue.addAll(current.getParents());
-         }
-         return allParents;
+         return ItemUtils.getAllParents(this);
     }
     
     /* (non-Javadoc)
@@ -591,13 +577,7 @@ public abstract class MockItem extends MockAuditableObject implements Item {
      * @return The parents.
      */
     public Set<CollectionItem> getParents() {
-        
-        Set<CollectionItem> parents = new HashSet<CollectionItem>();
-        for (CollectionItemDetails cid: parentDetails) {
-            parents.add(cid.getCollection());
-        }
-        
-        return Collections.unmodifiableSet(parents);
+        return ItemUtils.getParents(parentDetails);
     }
     
     /* (non-Javadoc)

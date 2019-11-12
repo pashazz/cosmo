@@ -39,6 +39,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import org.unitedinternet.cosmo.model.*;
+import org.unitedinternet.cosmo.model.util.ItemUtils;
 
 
 /**
@@ -415,39 +416,17 @@ public abstract class HibItem extends HibAuditableObject implements Item {
 
     @Override
     public Set<CollectionItem> getParents() {
-        if(parents!=null) {
-            return parents;
+        if(parents == null) {
+            parents = ItemUtils.getParents(parentDetails);
         }
-
-        parents = new HashSet<CollectionItem>();
-        for(CollectionItemDetails cid: parentDetails) {
-            parents.add(cid.getCollection());
-        }
-
-        parents = Collections.unmodifiableSet(parents);
-
         return parents;
     }
 
     public Set<CollectionItem> getAllParents() {
-        if (parents != null && allParents != null) {
-            //nullification of parents means cache has to be cleared anyway
-            allParents = new HashSet<>();
-            Queue<Item> queue = new LinkedList<>();
-            Set<Item> visited = new HashSet<>();
-            //BFS
-            queue.add(this);
-            while (!queue.isEmpty()) {
-                Item current = queue.poll();
-                if (visited.contains(current))
-                    continue;
-                allParents.addAll(current.getParents());
-                queue.addAll(current.getParents());
-                visited.add(current);
-            }
-
+        if (parents == null || allParents == null) {
+            allParents = ItemUtils.getAllParents(this);
         }
-        return allParents;
+         return allParents;
     }
 
     @Override
@@ -469,6 +448,8 @@ public abstract class HibItem extends HibAuditableObject implements Item {
         
         return null;
     }
+
+
 
     @Override
     public SortedSet<Ace> getAces() {

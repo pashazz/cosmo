@@ -2,6 +2,8 @@ package org.unitedinternet.cosmo.security.util;
 
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.jackrabbit.webdav.DavConstants;
 import org.apache.jackrabbit.webdav.DavResource;
 import org.apache.jackrabbit.webdav.property.DavProperty;
@@ -18,6 +20,8 @@ import org.unitedinternet.cosmo.model.*;
 import org.unitedinternet.cosmo.security.Permission;
 
 public class SecurityHelperUtils {
+
+    private static final Log LOG = LogFactory.getLog(SecurityHelperUtils.class);
 
     private enum Decision {
         GRANT, DENY, ABSTAIN
@@ -53,7 +57,7 @@ public class SecurityHelperUtils {
         /**
          * This code represents proctected ACEs present in DavItemResourceBase.makeAcl
          */
-
+        LOG.info(who + " attempts to access " + what +  "with permission " + perm);
         if (canAccessPrincipal(who, what.getOwner())) {
             return true;
         }
@@ -81,6 +85,7 @@ public class SecurityHelperUtils {
      * @return
      */
     public static Decision canAccessUnprotected(User who, Item what, Permission perm) {
+        LOG.info("Checking unprotected aces to decide whether " + who + " can access  " + what);
         for (Ace ace : what.getAces()) {
             if (ace.getType().equals(Ace.Type.AUTHENTICATED) ||
                     (ace.getType().equals(Ace.Type.USER) && (ace.getUser().equals(who) ||

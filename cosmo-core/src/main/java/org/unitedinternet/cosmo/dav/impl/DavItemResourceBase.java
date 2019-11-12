@@ -63,6 +63,7 @@ import org.unitedinternet.cosmo.dav.property.Uuid;
 import org.unitedinternet.cosmo.dav.ticket.TicketConstants;
 import org.unitedinternet.cosmo.icalendar.ICalendarClientFilterManager;
 import org.unitedinternet.cosmo.model.*;
+import org.unitedinternet.cosmo.security.ItemSecurityException;
 import org.unitedinternet.cosmo.security.Permission;
 import org.unitedinternet.cosmo.service.ContentService;
 import org.unitedinternet.cosmo.util.PathUtil;
@@ -484,6 +485,9 @@ public abstract class DavItemResourceBase extends DavResourceBase implements
             }
         } catch (CosmoDavException e) {
             log.warn("Unable to fetch inherited aces from parent by " + this + ": " + e.getMessage());
+        }
+        catch (ItemSecurityException e) {
+            log.debug("Caught ItemSecurityException on one of the parents: " + e.getItem() +  ": it's OK");
         }
 
 
