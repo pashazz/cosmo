@@ -32,7 +32,7 @@ public class TestXmlUtils implements ExtendedDavConstants {
     private static final Log LOG = LogFactory.getLog(TestXmlUtils.class);
     protected  HttpResponse response;
     protected Document document;
-    Map<ImmutablePair<Namespace, String>, Element> parts = null;
+    Map<String, List<Element>> parts = null;
     public Document getDocument() {
         return document;
     }
@@ -41,6 +41,10 @@ public class TestXmlUtils implements ExtendedDavConstants {
         this.response = response;
         Assert.assertEquals("text/xml", response.getEntity().getContentType().getElements()[0].getName());
         loadXml();
+    }
+
+    public int noOfResponses() {
+        return getMultistatusParts().size();
     }
 
     private void loadXml() throws ParserConfigurationException, IOException, SAXException {
@@ -58,29 +62,33 @@ public class TestXmlUtils implements ExtendedDavConstants {
     }
 
     // Returns D:response
-    public Element getMultistatusResponse() {
-        return DomUtil.getChildElement(this.document.getDocumentElement(),
-                "response",
-                NAMESPACE);
+
+
+    public void containsHref(String expected) {
+        Assert.assertTrue(getMultistatusParts().containsKey(expected));
     }
 
-    public void multistatusHrefEquals(String expected) {
-        String value = DomUtil.getChildElement(getMultistatusResponse(), "href", NAMESPACE).getTextContent();
-        Assert.assertEquals(expected, value);
-    }
-
-    public Map<ImmutablePair<Namespace, String>, Element> getMultistatusParts() {
+    public Map<String, List<Element>> getMultistatusParts() {
         if (parts == null) {
             parts = new HashMap<>();
-            ElementIterator iterator = DomUtil.getChildren(getMultistatusResponse());
+            ElementIterator iterator = DomUtil.getChildren(this.document.getDocumentElement());
             while (iterator.hasNext()) {
                 Element el = iterator.nextElement();
-                if (DomUtil.matches(el, "href",  NAMESPACE)) {
-                    continue; //Everything is relevant besides D.href
+                Element href = DomUtil.getChildElement(el, "href", NAMESPACE);
+                Assert.assertNotNull(href);
+
+                List<Element> list = new ArrayList<Element>();
+                ElementIterator children = DomUtil.getChildren(el);
+                while (children.hasNext()) {
+                    Element child = children.next();
+                    if (DomUtil.matches(child, "href", NAMESPACE)) {
+                        // it's a key, skip it
+                        continue;
+                    }
+                    list.add(child);
                 }
-                Element status = DomUtil.getChildElement(el, "status", NAMESPACE);
-                Assert.assertNotNull(status);
-                parts.put(new ImmutablePair<>(DomUtil.getNamespace(el), el.getLocalName()), el);
+
+                parts.put(href.getTextContent(), list);
             }
         }
 
@@ -90,7 +98,7 @@ public class TestXmlUtils implements ExtendedDavConstants {
     public Element findPropstatProp(String propName, Namespace namespace) {
         // Find property in D:propstat D:prop
         Element prop = DomUtil.getChildElement(
-                getMultistatusParts().get(new ImmutablePair<>(NAMESPACE, "propstat")),
+                getMultistatusParts().values().iterator().next().get(0), // This should be D:propstat
                 "prop", NAMESPACE);
         Assert.assertNotNull(prop);
         Element propChild =  DomUtil.getChildElement(prop, propName, namespace);

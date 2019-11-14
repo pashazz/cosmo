@@ -78,6 +78,18 @@ public class AllowAllAuthenticationProvider implements AuthenticationProvider {
         }
         group.addUser(user);
 
+        Group group2 = this.userService.getGroup(DEFAULT_GROUP_NAME + "2");
+        if (group2 != null) {
+            LOGGER.info("[AUTH] Found group " + group2.getUsername() + ": " + group2.getDisplayName());
+        } else {
+            LOGGER.info("[AUTH] No group found with name '{}'. Creating a new one...", DEFAULT_GROUP_NAME + "2");
+            group2 = this.entityFactory.createGroup();
+            group2.setUsername(DEFAULT_GROUP_NAME + "2");
+            group2.setDisplayName("Group For Everyone 2");
+            group2 = this.userService.createGroup(group2);
+        }
+        group2.addUser(user);
+
 
 
 

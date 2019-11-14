@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.integrational.api.app.IntegrationalTestApplication;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -48,6 +49,13 @@ public abstract class AbstractIntegrationalTest {
             Assert.fail("Wrong URI: " + e);
         }
         return null;
+    }
+    public InputStream getInputStream(String name)  {
+        InputStream in = getClass().getClassLoader().getResourceAsStream(name);
+        if (in == null) {
+            throw new IllegalStateException("resource " + name + " not found");
+        }
+        return in;
     }
 
 

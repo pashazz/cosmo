@@ -47,13 +47,7 @@ public class MkcalendarTest extends AbstractMockIntegrationalTest{
         return makeRequest("MKCALENDAR", path);
     }
 
-    public InputStream getInputStream(String name)  {
-        InputStream in = getClass().getClassLoader().getResourceAsStream(name);
-        if (in == null) {
-            throw new IllegalStateException("resource " + name + " not found");
-        }
-        return in;
-    }
+
     @Test
     public void testMkcalendar() throws IOException {
         HttpClientBuilder builder = withUser(UserConstants.USER1_EMAIL, UserConstants.USER1_PASSWORD);
@@ -97,7 +91,8 @@ public class MkcalendarTest extends AbstractMockIntegrationalTest{
 
         // Read response
         utils.isMultistatusOK();
-        utils.multistatusHrefEquals(String.format("/cosmo/dav/%s/calendar/", UserConstants.USER1_EMAIL));
+        utils.containsHref(String.format("/cosmo/dav/%s/calendar/", UserConstants.USER1_EMAIL));
+        Assert.assertEquals(1, utils.noOfResponses());
 
         // CPSU should contain everything for us as we're the owners
 
@@ -134,7 +129,8 @@ public class MkcalendarTest extends AbstractMockIntegrationalTest{
 
          // Read response
         utils.isMultistatusOK();
-        utils.multistatusHrefEquals(String.format("/cosmo/dav/%s/calendar/", UserConstants.USER1_EMAIL));
+        utils.containsHref(String.format("/cosmo/dav/%s/calendar/", UserConstants.USER1_EMAIL));
+        Assert.assertEquals(1, utils.noOfResponses());
 
         // CPSU should contain ONLY DAV:read and DAV:r-c-u-p-s
         CUPS = utils.findPropstatProp("current-user-privilege-set", NAMESPACE);
